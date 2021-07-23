@@ -1,0 +1,37 @@
+Develop a e-commerce backend.
+
+****************** Basic requiremermenrs **************
+
+- Customer registration, siging, signout
+- Business registration, siging, signout
+- Customer sigin
+- Business signin
+- Add products by a business user
+- Tag a product by the business user
+- Customer can view a product by tag or name
+- Customer can buy a product
+- Each product must have the following properties
+	- Name
+	- Price
+	- Tags
+- Tag is predefined by the system like electronics, home applicance, grocery, cosmetics etc. You are open to design it.
+  Keep tag hierracy in mind.
+- Customer can view purchase history
+- Business user can view business history
+- User can add money from external source
+
+************** Advance ****************
+
+- Add reward point for each purchase
+- User can use reward point to purchase products
+
+######################################################
+
+Stage #1:
+	- Implement a console application.
+
+Stage #2:
+	- Include database to persist data
+
+Stage #3:
+	- Will be added later
