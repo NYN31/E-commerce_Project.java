@@ -1,6 +1,6 @@
 package ecommerce_backend;
 
-public class CustomerRegDetails {
+public class BuyerRegDetails {
 	private String Name ;
 	private String Email;
 	private String Password;
@@ -8,7 +8,7 @@ public class CustomerRegDetails {
 	private String ProfilePicPath = "";
 
 	
-	public CustomerRegDetails(String name, String email, String password,
+	public BuyerRegDetails(String name, String email, String password,
 			String address) {
 		Name = name ;
 		Email = email;
@@ -22,11 +22,9 @@ public class CustomerRegDetails {
 	public String getAddress() { return Address; }
 	public String getProfilePicPath() { return ProfilePicPath; }
 	
+	public void setName(String name) { Name = name ; }
 	public void setEmail(String email) { Email = email ; }
 	public void setPassword(String password) { Password = password ; }
 	public void setAddress(String address) { Address = address; }
 	public void setProfilePicPath(String profilePicPath) { ProfilePicPath = profilePicPath ; }
-	
-	
-	
 }

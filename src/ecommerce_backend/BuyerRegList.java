@@ -2,20 +2,20 @@ package ecommerce_backend;
 
 import java.util.*;
 
-public class CustomerRegList {
-	List<CustomerRegDetails> CustomerList = null;
+public class BuyerRegList {
+	List<BuyerRegDetails> BuyerList = null;
 	
-	public CustomerRegList() {
-		CustomerList = new ArrayList<>() ;
+	public BuyerRegList() {
+		BuyerList = new ArrayList<>() ;
 	}
 	
-	public void addCustomer(CustomerRegDetails customerRegDetails) {
-		CustomerList.add(customerRegDetails) ;
+	public void addBuyer(BuyerRegDetails buyerRegDetails) {
+		BuyerList.add(buyerRegDetails) ;
 	}
 	
-	public boolean isRegesterCustomerUser(String email, String pass) {
-		for(CustomerRegDetails customer: CustomerList) {
-			if(email.equals(customer.getEmail()) && pass.equals(customer.getPassword())) {
+	public boolean isRegesterBuyerUser(String email, String pass) {
+		for(BuyerRegDetails buyer: BuyerList) {
+			if(email.equals(buyer.getEmail()) && pass.equals(buyer.getPassword())) {
 				return true ;
 			}
 		}
@@ -24,7 +24,7 @@ public class CustomerRegList {
 	
 	public void showAllCustomer() {
 		int customerCount = 0 ;
-		for(CustomerRegDetails customer: CustomerList) {
+		for(BuyerRegDetails customer: BuyerList) {
 			System.out.println("Customer number: " + ++customerCount) ;
 			System.out.println("Customer Name: " + customer.getName()) ;
 			System.out.println("Customer Email: " + customer.getEmail()) ;
@@ -34,8 +34,8 @@ public class CustomerRegList {
 		}
 	}
 	
-	public CustomerRegDetails findEmail(String email) {
-		for(CustomerRegDetails customer: CustomerList) {
+	public BuyerRegDetails findEmail(String email) {
+		for(BuyerRegDetails customer: BuyerList) {
 			if(customer.getEmail().equals(email)) {
 				return customer ;
 			}
@@ -44,7 +44,7 @@ public class CustomerRegList {
 	}
 	
 	public String changeEmail(String currentEmail, String newEmail) {
-		for(CustomerRegDetails customer: CustomerList) {
+		for(BuyerRegDetails customer: BuyerList) {
 			if(customer.getEmail().equals(currentEmail)) {
 				customer.setEmail(newEmail);
 				return "Your email has been changed successfully...!";
@@ -52,11 +52,22 @@ public class CustomerRegList {
 		}
 		return "Customer not found...!";
 	}
+	
 	public String changePassword(String currentEmail, String currentPassword, String newPassword) {
-		for(CustomerRegDetails customer: CustomerList) {
+		for(BuyerRegDetails customer: BuyerList) {
 			if(customer.getEmail().equals(currentEmail) && customer.getPassword().equals(currentPassword)) {
 				customer.setPassword(newPassword);
 				return "Your password has been changed successfully...!";
+			}
+		}
+		return "Customer not found...!";
+	}
+	
+	public String changeName(String currentEmail, String currentName, String newName) {
+		for(BuyerRegDetails customer: BuyerList) {
+			if(customer.getEmail().equals(currentEmail) && customer.getName().equals(currentName)) {
+				customer.setName(newName) ;
+				return "Your name has been updated successfully...!";
 			}
 		}
 		return "Customer not found...!";

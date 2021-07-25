@@ -1,6 +1,6 @@
 package ecommerce_backend;
 
-public class BusinessRegDetails {
+public class SellerRegDetails {
 	private String Name ;
 	private String Email;
 	private String Password;
@@ -8,7 +8,7 @@ public class BusinessRegDetails {
 	private String Address;
 	private String LogoImagePath = "" ;
 	
-	public BusinessRegDetails(String name, String email, String password,
+	public SellerRegDetails(String name, String email, String password,
 			String companyName, String address) {
 		Name = name ;
 		Email = email;

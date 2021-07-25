@@ -2,19 +2,19 @@ package ecommerce_backend;
 
 import java.util.*;
 
-public class BusinessRegList {
-	List<BusinessRegDetails> BusinessList = null;
+public class SellerRegList {
+	List<SellerRegDetails> SellerList = null;
 	
-	public BusinessRegList() {
-		BusinessList = new ArrayList<>() ;
+	public SellerRegList() {
+		SellerList = new ArrayList<>() ;
 	}
 	
-	public void addBusiness(BusinessRegDetails businessRegDetails) {
-		BusinessList.add(businessRegDetails) ;
+	public void addSeller(SellerRegDetails sellerRegDetails) {
+		SellerList.add(sellerRegDetails) ;
 	}
 	
-	public boolean isRegesterBusinessUser(String email, String pass) {
-		for(BusinessRegDetails business: BusinessList) {
+	public boolean isRegesterSellerUser(String email, String pass) {
+		for(SellerRegDetails business: SellerList) {
 			if(email.equals(business.getEmail()) && pass.equals(business.getPassword())) {
 				return true ;
 			}
@@ -24,7 +24,7 @@ public class BusinessRegList {
 	
 	public void showAllBusiness() {
 		int businessCount = 0 ;
-		for(BusinessRegDetails business: BusinessList) {
+		for(SellerRegDetails business: SellerList) {
 			System.out.println("Business number: " + ++businessCount) ;
 			System.out.println("Business Name: " + business.getName()) ;
 			System.out.println("Business Email: " + business.getEmail()) ;

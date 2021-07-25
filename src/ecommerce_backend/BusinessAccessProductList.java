@@ -18,7 +18,7 @@ public class BusinessAccessProductList extends ProductList {
 				break ;
 			}
 		}
-		if(deleteProduct == null) System.out.println("Product is no found in the list...!");
+		if(deleteProduct == null) System.out.println("Product is not found in the list...!");
 		else {
 			productList.remove(deleteProduct) ;
 		}
