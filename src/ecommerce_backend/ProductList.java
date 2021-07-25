@@ -9,31 +9,52 @@ public class ProductList {
 		productList = new ArrayList<>();
 	}
 	
-	public void addProduct(ProductDetails productDetails) {
-		productList.add(productDetails);
-	}
-	
 	public void showAllProducts() {
-		int productCount = 0 ;
 		if(productList.isEmpty()) {
 			System.out.println("Product list is Empty...!") ;
 			return ;
 		}
+		
+		if(productList.size() > 0) {
+			System.out.println("Watch all prodcuts with details: ") ;
+		}
+		
 		for(ProductDetails product: productList) {
-			System.out.println("Product number: " + ++productCount) ;
+			System.out.println("Product id: " + product.getProductId()) ;
 			System.out.println("Product name: " + product.getProductName()) ;
 			System.out.println("Product price: " + product.getProductPrice()) ;
 			System.out.println("Product Quantity: " + product.getProductQuantity()) ;
+			System.out.println("------------------------") ;
 		}
 	}
 	
 	public boolean showProductByName(String name) {
+		boolean isExistProduct = false;
+		if(productList.isEmpty()) {
+			System.out.println("Product list is Empty...!") ;
+			return isExistProduct;
+		}
+		
+		for(ProductDetails product: productList) {
+			if(product.getProductName().equals(name)) {
+				System.out.println("Product id: " + product.getProductId()) ;
+				System.out.println("Product name: " + product.getProductName()) ;
+				System.out.println("Product price: " + product.getProductPrice()) ;
+				System.out.println("Product Quantity: " + product.getProductQuantity()) ;
+				isExistProduct = true ;
+			}
+		}
+		return isExistProduct ;
+	}
+	
+	public boolean showProductById(int id) {
 		if(productList.isEmpty()) {
 			System.out.println("Product list is Empty...!") ;
 			return false;
 		}
 		for(ProductDetails product: productList) {
-			if(product.getProductName().equals(name)) {
+			if(product.getProductId() == id) {
+				System.out.println("Product id: " + product.getProductId()) ;
 				System.out.println("Product name: " + product.getProductName()) ;
 				System.out.println("Product price: " + product.getProductPrice()) ;
 				System.out.println("Product Quantity: " + product.getProductQuantity()) ;
@@ -42,18 +63,4 @@ public class ProductList {
 		}
 		return false ;
 	}
-	
-//	public void showProductByTag(String tag) {
-//		if(productList.isEmpty()) {
-//			System.out.println("Product list is Empty...!") ;
-//			return ;
-//		}
-//		for(ProductDetails product: productList) {
-//			if(product.getProductTag().equals(tag)) {
-//				System.out.println("Product name: " + product.getProductName()) ;
-//				System.out.println("Product price: " + product.getProductPrice()) ;
-//				System.out.println("Product tag: " + product.getProductTag()) ;
-//			}
-//		}
-//	}
 }

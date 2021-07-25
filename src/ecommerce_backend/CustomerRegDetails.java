@@ -22,4 +22,11 @@ public class CustomerRegDetails {
 	public String getAddress() { return Address; }
 	public String getProfilePicPath() { return ProfilePicPath; }
 	
+	public void setEmail(String email) { Email = email ; }
+	public void setPassword(String password) { Password = password ; }
+	public void setAddress(String address) { Address = address; }
+	public void setProfilePicPath(String profilePicPath) { ProfilePicPath = profilePicPath ; }
+	
+	
+	
 }
