@@ -13,13 +13,13 @@ public class SellerRegList {
 		SellerList.add(sellerRegDetails) ;
 	}
 	
-	public boolean isRegesterSellerUser(String email, String pass) {
+	public SellerRegDetails isRegesterSellerUser(String email, String pass) {
 		for(SellerRegDetails business: SellerList) {
 			if(email.equals(business.getEmail()) && pass.equals(business.getPassword())) {
-				return true ;
+				return business ;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	public void showAllBusiness() {

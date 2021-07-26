@@ -1,7 +1,6 @@
 package ecommerce_backend;
 
-public class BusinessAccessProductList extends ProductList {
-	
+public class SellerExtendsProductList extends ProductList {
 	public void addProduct(ProductDetails productDetails) {
 		productList.add(productDetails);
 	}
@@ -24,5 +23,4 @@ public class BusinessAccessProductList extends ProductList {
 		}
 	}
 	
-
 }

@@ -6,7 +6,6 @@ import java.util.regex.*;
 
 
 
-
 public class MainEcommerceBackend {
 	private static final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 	
@@ -16,6 +15,10 @@ public class MainEcommerceBackend {
 	public static void main(String[] args) throws IOException {
 		BuyerRegList buyerList = new BuyerRegList();
 		SellerRegList sellerList = new SellerRegList();
+		ProductList productList = new ProductList();
+		BuyerExtendsProductList buyerExtendsProductList = new BuyerExtendsProductList();
+		SellerExtendsProductList sellerExtendsProductList = new SellerExtendsProductList();
+		
 		
 		boolean signIn, sellerSignIn, buyerSignIn ;
 		signIn = sellerSignIn = buyerSignIn = false ;
@@ -66,7 +69,7 @@ public class MainEcommerceBackend {
 					System.out.println("You are registered successfully as a buyer...!");			
 				}
 				else if(regPageChoice == 2) {
-					System.out.println("Fill the form as a business...!") ;
+					System.out.println("Fill the form as a seller...!") ;
 					System.out.println("Enter your name: ") ;
 					String name = in.nextLine() ;
 					name = validName(name) ;
@@ -101,30 +104,217 @@ public class MainEcommerceBackend {
 				}
 			}
 			else if(homePageChoice == 2) {
-				System.out.println("Please Sign-in here...!") ;
-				System.out.println("1. Buyer sign in") ;
-				System.out.println("2. Seller sign in");
-				System.out.println("3. Exited from sign-in section") ;
 				
 				while(true) {
+					System.out.println("Please Sign-in here...!") ;
+					System.out.println("1. Buyer sign in") ;
+					System.out.println("2. Seller sign in");
+					System.out.println("3. Exited from sign-in section") ;
 					System.out.println("Enter you sign in choice: ") ;
 					int singInChoice = in.nextInt();
 					in.nextLine();
 					
 					if(singInChoice == 1) {
-						System.out.println("Sign in as a buyer...!") ;
-						signIn = signInMethodBuyer(buyerList);
+						BuyerRegDetails buyerProfile = signInMethodBuyer(buyerList);
 						
-						if(signIn) {
-							System.out.println("All Buyer feature...!") ;
+
+						
+						if(buyerProfile != null) {
+							System.out.println("Buyer Details:") ;
+							showBuyerDetailsHere(buyerProfile) ;
+							signIn = buyerSignIn = true ;
+							while(true) {
+								System.out.println("All Buyer feature...!") ;
+								System.out.println("1. Edit profile"); // done, without picture
+								System.out.println("2. View products"); // done
+								System.out.println("3. Buy a product");
+								System.out.println("4. Rate a product");
+								System.out.println("5. Check purchase history");
+								System.out.println("6. Connect bank");
+								System.out.println("7. Add money");
+								System.out.println("8. Sign out");
+								System.out.println("9. Back");
+								System.out.println("Enter you Buyer feature option: ") ;
+								int buyerChoice = in.nextInt();
+								in.nextLine();
+								
+								if(buyerChoice == 1) {
+									System.out.println("Buyer profile edit sectoin...!") ;
+									
+									while(true) {
+										System.out.println("0. Back") ;
+										System.out.println("1. Change email");
+										System.out.println("2. Change password");
+										System.out.println("3. Change name");
+										System.out.println("4. Change profile picture");
+										System.out.println("Please Enter a Edit section choice: ") ;
+										int editProfilechoice = in.nextInt();
+										in.nextLine() ;
+										if(editProfilechoice == 1) {
+											System.out.println("Please Enter current email: ") ;
+											String currentEmail = in.nextLine() ;
+											System.out.println("Please Enter new email: ") ;
+											while(true) {
+												String newEmail = in.nextLine();
+												newEmail = validEmail(newEmail) ;
+												BuyerRegDetails buyerDetailsForEmailChange = buyerList.findEmail(newEmail) ;
+												if(buyerDetailsForEmailChange != null) {
+													System.out.println("The email is already exist...! please try again...!") ;
+													continue ;
+												} else {
+													buyerProfile = buyerList.changeEmail(currentEmail, newEmail);
+													if(buyerProfile != null) {
+														System.out.println("Successfully edited your profile...!") ;
+														showBuyerDetailsHere(buyerProfile) ;
+													}else {
+														System.out.println("You given info are wrong...!");
+													}
+													break ;
+												}
+											}
+										}
+										else if(editProfilechoice == 2) {
+											System.out.println("Please Enter you current email: ") ;
+											String currentEmail = in.nextLine();
+											System.out.println("Please Enter you current password: ") ;
+											String currentPassword = in.nextLine();
+											
+											System.out.println("Please Enter your new password: ") ;
+											String newPassword = in.nextLine();
+											while(!isValidPassword(newPassword)) {
+												System.out.println("Enter a valid password please: ") ;
+												newPassword = in.nextLine();
+											}
+											
+											buyerProfile = buyerList.changePassword(currentEmail, currentPassword, newPassword);
+											if(buyerProfile != null) {
+												System.out.println("Successfully edited your profile...!") ;
+												showBuyerDetailsHere(buyerProfile) ;
+											}else {
+												System.out.println("You given info are wrong...!");
+											}
+										}
+										else if(editProfilechoice == 3) {
+											System.out.println("Please enter your current email: ");
+											String currentEmail = in.nextLine();
+											System.out.println("Please Enter your current name: ") ;
+											String currentName = in.nextLine();
+											System.out.println("Please Enter your new name: ") ;
+											String newName = in.nextLine();
+											newName = validName(newName) ;
+											buyerProfile = buyerList.changeName(currentEmail, currentName, newName) ;
+											if(buyerProfile != null) {
+												System.out.println("Successfully edited your profile...!") ;
+												showBuyerDetailsHere(buyerProfile) ;
+											}else {
+												System.out.println("You given info are wrong...!");
+											}
+										}
+										else {
+											System.out.println("You are successfully exited from edit section...!") ;
+											break ;
+										}
+									}
+								}
+								else if(buyerChoice == 2) {
+									System.out.println("View all products...!");
+									productList.showAllProducts();
+									
+								}else if(buyerChoice == 3) {
+									
+								}else if(buyerChoice == 4) {
+									System.out.println("Rate a product...!") ;
+									System.out.println("Enter product Id: ") ;
+									int productId = in.nextInt();
+									System.out.println("Enter product raging: ") ;
+									
+								}else if(buyerChoice == 5) {
+									
+								}else if(buyerChoice == 6) {
+									
+								}else if(buyerChoice == 7) {
+									
+								}else if(buyerChoice == 8) {
+									
+								}else {
+									System.out.println("You are successfully exited from buyer section...!") ;
+									break ;
+								}
+							}
+						}
+						else {
+							System.out.println("You are not successfully sign in...!") ;
 						}
 					}
 					else if(singInChoice == 2) {
-						System.out.println("Sign in as a seller...!") ;
-						signIn = signInMethodSeller(sellerList) ;
+						SellerRegDetails sellerProfile = signInMethodSeller(sellerList);
 						
-						if(signIn) {
-							System.out.println("All Seller feature...!") ;
+
+						
+						if(sellerProfile != null) {
+							System.out.println("Seller Details:") ;
+							showSellerDetailsHere(sellerProfile) ;
+							signIn = sellerSignIn = true ;
+							while(true) {
+								System.out.println("All Buyer feature...!") ;
+								System.out.println("1. Add a product"); // done
+								System.out.println("2. Remove a product"); // done
+								System.out.println("3. Product details"); // done
+								System.out.println("4. Connect Bank");
+								System.out.println("5. Withdraw money");
+								System.out.println("6. Check sell histroy");
+								System.out.println("7. Sign-out");
+								System.out.println("8. Back");
+								
+								System.out.println("Enter you Seller feature option: ") ;
+								int sellerChoice = in.nextInt();
+								in.nextLine();
+								
+								if(sellerChoice == 1) {
+									System.out.println("Add a product...!") ;
+									System.out.println("Enter a product id: ") ;
+									int id = in.nextInt();
+									in.nextLine();
+									
+									System.out.println("Enter product name: ") ;
+									String name = in.nextLine();
+									
+									System.out.println("Enter product price: ") ;
+									int price = in.nextInt();
+									in.nextLine();
+									
+									System.out.println("Enter product Quantity: ") ;
+									int quantity = in.nextInt();
+									
+									ProductDetails productDetails = new ProductDetails(id, name, price, quantity);
+									sellerExtendsProductList.addProduct(productDetails) ;
+									System.out.println("Product added successfully...!") ;
+								}
+								else if(sellerChoice == 2) {
+									System.out.println("Remove a product...!");
+									System.out.println("Enter a product id: ") ;
+									int id = in.nextInt();
+									in.nextLine();
+									
+									System.out.println("Enter a product name: ") ;
+									String name = in.nextLine();
+									sellerExtendsProductList.removeProduct(id, name) ;
+								}
+								else if(sellerChoice == 3) {
+									sellerExtendsProductList.showAllProducts(); 
+								}else if(sellerChoice == 4) {
+									
+								}else if(sellerChoice == 5) {
+									
+								}else if(sellerChoice == 6) {
+									
+								}else if(sellerChoice == 7) {
+									
+								}else {
+									System.out.println("You are successfully exited from seller section...!") ;
+									break ;
+								}
+							}
 						}
 					}
 					else {
@@ -140,35 +330,25 @@ public class MainEcommerceBackend {
 		}
 	}
 	
-	public static boolean signInMethodSeller(SellerRegList sellerList) {
-		String email, password ;
-		while(true) {
-			System.out.println("Enter you email: ") ;
-			email = in.nextLine() ;
-			email = validEmail(email) ;
-			
-			System.out.println("Enter your password: ") ;
-			password = in.nextLine() ;
-			
-			if(sellerList.isRegesterSellerUser(email, password)) {
-				System.out.println("You are sign in successfully...!") ;
-				return true ;
-			}
-			else {
-				System.out.println("Email or Password is incorrect...!") ;
-				System.out.println("If you don't want to sign in, then press q or Q: ") ;
-				String q = in.nextLine() ;
-				if(q.equals("q") || q.equals("Q")) {
-					break ;
-				}
-			}
-		}
-		return false ;
+	public static void showBuyerDetailsHere(BuyerRegDetails buyer) {
+		System.out.println("Buyer Name: " + buyer.getName()) ;
+		System.out.println("Buyer Email: " + buyer.getEmail()) ;
+		System.out.println("Buyer Password: " + buyer.getPassword()) ;
+		System.out.println("Buyer Address: " + buyer.getAddress());
+		System.out.println("-----------------------");
+	}
+	public static void showSellerDetailsHere(SellerRegDetails seller) {
+		System.out.println("Seller Name: " + seller.getName()) ;
+		System.out.println("Seller Email: " + seller.getEmail()) ;
+		System.out.println("Seller Password: " + seller.getPassword()) ;
+		System.out.println("Seller Address: " + seller.getAddress());
+		System.out.println("-----------------------");
 	}
 	
-	public static boolean signInMethodBuyer(BuyerRegList buyerList) {
+	public static BuyerRegDetails signInMethodBuyer(BuyerRegList buyerList) {
 		String email, password ;
 		while(true) {
+			System.out.println("Sign in as a buyer...!") ;
 			System.out.println("Enter you email: ") ;
 			email = in.nextLine() ;
 			email = validEmail(email) ;
@@ -176,9 +356,10 @@ public class MainEcommerceBackend {
 			System.out.println("Enter your password: ") ;
 			password = in.nextLine() ;
 			
-			if(buyerList.isRegesterBuyerUser(email, password)) {
+			BuyerRegDetails buyerProfile = buyerList.isRegesterBuyerUser(email, password) ;
+			if(buyerProfile != null) {
 				System.out.println("You are sign in successfully...!") ;
-				return true ;
+				return buyerProfile ;
 			}
 			else {
 				System.out.println("Email or Password is incorrect...!") ;
@@ -189,7 +370,35 @@ public class MainEcommerceBackend {
 				}
 			}
 		}
-		return false ;
+		return null ;
+	}
+	
+	public static SellerRegDetails signInMethodSeller(SellerRegList sellerList) {
+		String email, password ;
+		while(true) {
+			System.out.println("Sign in as a seller...!") ;
+			System.out.println("Enter you email: ") ;
+			email = in.nextLine() ;
+			email = validEmail(email) ;
+			
+			System.out.println("Enter your password: ") ;
+			password = in.nextLine() ;
+			
+			SellerRegDetails sellerProfile = sellerList.isRegesterSellerUser(email, password);
+			if(sellerProfile != null) {
+				System.out.println("You are sign in successfully...!") ;
+				return sellerProfile;
+			}
+			else {
+				System.out.println("Email or Password is incorrect...!") ;
+				System.out.println("If you don't want to sign in, then press q or Q: ") ;
+				String q = in.nextLine() ;
+				if(q.equals("q") || q.equals("Q")) {
+					break ;
+				}
+			}
+		}
+		return null ;
 	}
 	
 	public static String validName(String name) {

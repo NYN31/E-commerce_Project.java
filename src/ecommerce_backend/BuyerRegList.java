@@ -13,63 +13,63 @@ public class BuyerRegList {
 		BuyerList.add(buyerRegDetails) ;
 	}
 	
-	public boolean isRegesterBuyerUser(String email, String pass) {
+	public BuyerRegDetails isRegesterBuyerUser(String email, String pass) {
 		for(BuyerRegDetails buyer: BuyerList) {
 			if(email.equals(buyer.getEmail()) && pass.equals(buyer.getPassword())) {
-				return true ;
+				return buyer ;
 			}
 		}
-		return false;
+		return null;
 	}
 	
-	public void showAllCustomer() {
-		int customerCount = 0 ;
-		for(BuyerRegDetails customer: BuyerList) {
-			System.out.println("Customer number: " + ++customerCount) ;
-			System.out.println("Customer Name: " + customer.getName()) ;
-			System.out.println("Customer Email: " + customer.getEmail()) ;
-			System.out.println("Customer Password: " + customer.getPassword()) ;
-			System.out.println("Customer Address: " + customer.getAddress());
+	public void showAllBuyer() {
+		int buyerCount = 0 ;
+		for(BuyerRegDetails buyer: BuyerList) {
+			System.out.println("Customer number: " + ++buyerCount) ;
+			System.out.println("Buyer Name: " + buyer.getName()) ;
+			System.out.println("Buyer Email: " + buyer.getEmail()) ;
+			System.out.println("Buyer Password: " + buyer.getPassword()) ;
+			System.out.println("Buyer Address: " + buyer.getAddress());
 			System.out.println("-----------------------");
 		}
 	}
 	
 	public BuyerRegDetails findEmail(String email) {
-		for(BuyerRegDetails customer: BuyerList) {
-			if(customer.getEmail().equals(email)) {
-				return customer ;
+		for(BuyerRegDetails buyer: BuyerList) {
+			if(buyer.getEmail().equals(email)) {
+				return buyer ;
 			}
 		}
 		return null ;
 	}
 	
-	public String changeEmail(String currentEmail, String newEmail) {
-		for(BuyerRegDetails customer: BuyerList) {
-			if(customer.getEmail().equals(currentEmail)) {
-				customer.setEmail(newEmail);
-				return "Your email has been changed successfully...!";
+	public BuyerRegDetails changeEmail(String currentEmail, String newEmail) {
+		for(BuyerRegDetails buyer: BuyerList) {
+			if(buyer.getEmail().equals(currentEmail)) {
+				buyer.setEmail(newEmail);
+				return buyer;
 			}
 		}
-		return "Customer not found...!";
+		return null;
 	}
 	
-	public String changePassword(String currentEmail, String currentPassword, String newPassword) {
-		for(BuyerRegDetails customer: BuyerList) {
-			if(customer.getEmail().equals(currentEmail) && customer.getPassword().equals(currentPassword)) {
-				customer.setPassword(newPassword);
-				return "Your password has been changed successfully...!";
+	public BuyerRegDetails changePassword(String currentEmail, String currentPassword, String newPassword) {
+		for(BuyerRegDetails buyer: BuyerList) {
+			if(buyer.getEmail().equals(currentEmail) && buyer.getPassword().equals(currentPassword)) {
+				buyer.setPassword(newPassword);
+				return buyer;
 			}
 		}
-		return "Customer not found...!";
+		return null;
 	}
 	
-	public String changeName(String currentEmail, String currentName, String newName) {
-		for(BuyerRegDetails customer: BuyerList) {
-			if(customer.getEmail().equals(currentEmail) && customer.getName().equals(currentName)) {
-				customer.setName(newName) ;
-				return "Your name has been updated successfully...!";
+	public BuyerRegDetails changeName(String currentEmail, String currentName, String newName) {
+		for(BuyerRegDetails buyer: BuyerList) {
+			if(buyer.getEmail().equals(currentEmail) && buyer.getName().equals(currentName)) {
+				buyer.setName(newName) ;
+				return buyer;
 			}
 		}
-		return "Customer not found...!";
+		return null ;
 	}
 }
