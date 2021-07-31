@@ -6,13 +6,14 @@ public class ProductDetails {
 	private int Price ;
 	private String ProductImagePath = "";
 	private int Quantity ;
-	private float Rating ;
+	private double Rating ;
 	
 	public ProductDetails(int productId, String name, int price, int quantity) {
 		ProductId = productId ;
 		ProductName = name ;
 		Price = price ;
 		Quantity = quantity ;
+		Rating = 5.0 ;
 	}
 	
 	public int getProductId() { return ProductId; }
@@ -20,8 +21,9 @@ public class ProductDetails {
 	public int getProductPrice() { return Price; }
 	public int getProductQuantity() { return Quantity; }
 	public String getProductImagePath() { return ProductImagePath; }
-	public float getRating() { return Rating; }
+	public double getRating() { return Rating; }
 	
-	public void setProductRating(float rating) { Rating = rating ; }
+	public void setProductRating(double rating) { Rating = rating ; }
+	public void setProductQuantity(int quantity) { Quantity = quantity; }
 	
 }

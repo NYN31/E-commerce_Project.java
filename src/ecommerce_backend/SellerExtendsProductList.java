@@ -20,6 +20,7 @@ public class SellerExtendsProductList extends ProductList {
 		if(deleteProduct == null) System.out.println("Product is not found in the list...!");
 		else {
 			productList.remove(deleteProduct) ;
+			System.out.println("Product successfully removed...!") ;
 		}
 	}
 	

@@ -9,6 +9,14 @@ public class BuyerRegList {
 		BuyerList = new ArrayList<>() ;
 	}
 	
+	public List<BuyerRegDetails> getBuyerList() {
+		return BuyerList ;
+	}
+	
+	public void setBuyerList(List<BuyerRegDetails> list) {
+		BuyerList = list ;
+	}
+	
 	public void addBuyer(BuyerRegDetails buyerRegDetails) {
 		BuyerList.add(buyerRegDetails) ;
 	}

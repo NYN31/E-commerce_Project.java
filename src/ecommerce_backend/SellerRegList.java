@@ -14,22 +14,22 @@ public class SellerRegList {
 	}
 	
 	public SellerRegDetails isRegesterSellerUser(String email, String pass) {
-		for(SellerRegDetails business: SellerList) {
-			if(email.equals(business.getEmail()) && pass.equals(business.getPassword())) {
-				return business ;
+		for(SellerRegDetails seller: SellerList) {
+			if(email.equals(seller.getEmail()) && pass.equals(seller.getPassword())) {
+				return seller ;
 			}
 		}
 		return null;
 	}
 	
-	public void showAllBusiness() {
+	public void showAllSeller() {
 		int businessCount = 0 ;
-		for(SellerRegDetails business: SellerList) {
-			System.out.println("Business number: " + ++businessCount) ;
-			System.out.println("Business Name: " + business.getName()) ;
-			System.out.println("Business Email: " + business.getEmail()) ;
-			System.out.println("Customer CompanyName: " + business.getCompanyName()) ;
-			System.out.println("Customer Address: " + business.getAddress()) ;
+		for(SellerRegDetails seller: SellerList) {
+			System.out.println("Seller number: " + ++businessCount) ;
+			System.out.println("Seller Name: " + seller.getName()) ;
+			System.out.println("Seller Email: " + seller.getEmail()) ;
+			System.out.println("Seller CompanyName: " + seller.getCompanyName()) ;
+			System.out.println("Seller Address: " + seller.getAddress()) ;
 		}
 	}
 }
