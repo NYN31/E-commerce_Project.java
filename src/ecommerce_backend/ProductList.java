@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ProductList {
 	private static Scanner in = new Scanner(System.in) ;
+	DBConnector db = new DBConnector() ;
 	List<ProductDetails> productList = null ;
 	
 	public ProductList() {
@@ -11,6 +12,7 @@ public class ProductList {
 	}
 	
 	public void showAllProducts() {
+		productList = db.getAllProduct();
 		if(productList.isEmpty()) {
 			System.out.println("Product list is Empty...!") ;
 			return ;
@@ -22,7 +24,9 @@ public class ProductList {
 		
 		for(ProductDetails product: productList) {
 			System.out.println("Product id: " + product.getProductId()) ;
+			System.out.println("Seller id: " + product.getSellerId()) ;
 			System.out.println("Product name: " + product.getProductName()) ;
+			System.out.println("Product tag: " + product.getProductTag()) ;
 			System.out.println("Product price: " + product.getProductPrice()) ;
 			System.out.println("Product Quantity: " + product.getProductQuantity()) ;
 			System.out.println("Product Rating: " + product.getRating()) ;

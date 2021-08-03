@@ -5,14 +5,15 @@ import java.util.*;
 public class HomePageReg {
 	private static Scanner in = new Scanner(System.in) ;
 	ValidationMethods validationMethods = null ;
+	DBConnector db = new DBConnector() ;
 	
 	public HomePageReg() {
 		validationMethods = new ValidationMethods() ;
 	}
 	
-	public BuyerRegDetails CreateBuyerAccount() {
+	public void CreateBuyerAccount() {
 		System.out.println("Please create an account as buyer...!") ;
-		
+		int id = 0 ;
 		System.out.println("Enter you name: ") ;
 		String name = in.nextLine();
 		name = validationMethods.validName(name) ;
@@ -35,12 +36,13 @@ public class HomePageReg {
 		//System.out.println("Enter you profilePicture: ") ;
 		
 		BuyerRegDetails buyerRegDetails =
-				new BuyerRegDetails(name, email, password, address);
-		return buyerRegDetails ;	
+				new BuyerRegDetails(id, name, email, password, address);
+		db.saveBuyerAccount(buyerRegDetails);
 	}
 	
-	public SellerRegDetails CreateSellerAccount() {
+	public void CreateSellerAccount() {
 		System.out.println("Fill the form as a seller...!") ;
+		int id = 0 ;
 		System.out.println("Enter your name: ") ;
 		String name = in.nextLine() ;
 		name = validationMethods.validName(name) ;
@@ -65,7 +67,7 @@ public class HomePageReg {
 		address = validationMethods.validAddress(address) ;
 	
 		SellerRegDetails sellerRegDetails = 
-				new SellerRegDetails(name, email, password, companyName, address);
-		return sellerRegDetails ;
+				new SellerRegDetails(id, name, email, password, companyName, address);
+		db.saveSellerAccount(sellerRegDetails);
 	}
 }

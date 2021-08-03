@@ -5,6 +5,9 @@ import java.util.*;
 public class SellerFuncImplementation {
 	private static Scanner in = new Scanner(System.in) ;
 	ValidationMethods validationMethods = null ;
+	DBConnector db = new DBConnector() ;
+	List<SellerRegDetails> sellerList = db.getAllSeller() ;
+	SellerRegList sellerRegList = new SellerRegList() ;
 	
 	public SellerFuncImplementation() {
 		validationMethods = new ValidationMethods() ;
@@ -18,7 +21,7 @@ public class SellerFuncImplementation {
 		System.out.println("-----------------------");
 	}
 	
-	public SellerRegDetails signInMethodSeller(SellerRegList sellerList) {
+	public SellerRegDetails signInMethodSeller() {
 		String email, password ;
 		while(true) {
 			System.out.println("Sign in as a seller...!") ;
@@ -29,7 +32,7 @@ public class SellerFuncImplementation {
 			System.out.println("Enter your password: ") ;
 			password = in.nextLine() ;
 			
-			SellerRegDetails sellerProfile = sellerList.isRegesterSellerUser(email, password);
+			SellerRegDetails sellerProfile = sellerRegList.isRegesterSellerUser(email, password);
 			if(sellerProfile != null) {
 				System.out.println("You are sign in successfully...!") ;
 				return sellerProfile;
@@ -46,13 +49,13 @@ public class SellerFuncImplementation {
 		return null ;
 	}
 	
-	public ProductDetails addProduct() {
-		System.out.println("Enter a product id: ") ;
-		int id = in.nextInt();
-		in.nextLine();
-		
+	public void addProduct(int sellerId) {
+		int id = 0 ;
 		System.out.println("Enter product name: ") ;
 		String name = in.nextLine();
+		
+		System.out.println("Enter product tag name: ") ;
+		String tag = in.nextLine();
 		
 		System.out.println("Enter product price: ") ;
 		int price = in.nextInt();
@@ -61,18 +64,19 @@ public class SellerFuncImplementation {
 		System.out.println("Enter product Quantity: ") ;
 		int quantity = in.nextInt();
 		
-		ProductDetails productDetails = new ProductDetails(id, name, price, quantity);
-		return productDetails ;
+		ProductDetails productDetails = new ProductDetails(id, sellerId, name, tag, price, quantity, 5);
+		db.saveProduct(productDetails) ;
 	}
 	
-	public SellerExtendsProductList removeProduct(SellerExtendsProductList sellerExtendsProductList) {
+	public void removeProduct(int sellerId) {
 		System.out.println("Enter a product id: ") ;
 		int id = in.nextInt();
 		in.nextLine();
 		
-		System.out.println("Enter a product name: ") ;
-		String name = in.nextLine();
-		sellerExtendsProductList.removeProduct(id, name) ;
-		return sellerExtendsProductList ;
+		if(db.removeProduct(id, sellerId)) {
+			System.out.println("Your product has been removed successfully...!") ;
+		}else{
+			System.out.println("Product is not available in the store...!") ;
+		}
 	}
 }

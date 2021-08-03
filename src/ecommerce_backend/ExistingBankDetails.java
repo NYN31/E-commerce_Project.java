@@ -3,7 +3,8 @@ package ecommerce_backend;
 import java.util.*;
 
 public class ExistingBankDetails {
-	List<BankAccountDetails> bankAccountList ;
+	DBConnector db = new DBConnector() ;
+	List<BankAccountDetails> bankAccountList = null ;
 	
 	public ExistingBankDetails() {
 		bankAccountList = new ArrayList<>() ;

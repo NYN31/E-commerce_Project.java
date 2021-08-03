@@ -4,6 +4,8 @@ import java.util.*;
 
 public class BankFunctionalites {
 	private static Scanner in = new Scanner(System.in) ;
+	DBConnector db = new DBConnector() ;
+	List<BankAccountDetails> bankAccountList = null ;
 	
 	
 	public BankAccountDetails isBuyerConnectWithBank(ExistingBankDetails existingBankDetails) {
@@ -25,6 +27,7 @@ public class BankFunctionalites {
 	
 	public BankAccountDetails isSellerConnectWithBank(ExistingBankDetails existingBankDetails) {
 		BankAccountDetails sellerBankAccountDetails = null ;
+		
 		System.out.println("Enter Account Name: ");
 		String accountName = in.nextLine();
 		System.out.println("Enter Account Number: ");

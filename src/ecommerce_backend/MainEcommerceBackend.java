@@ -10,12 +10,14 @@ public class MainEcommerceBackend {
 	private static final Scanner in = new Scanner(System.in) ;
 	public static void main(String[] args) throws IOException {
 		
+		
+		DBConnector db = new DBConnector();
+		List<BuyerRegDetails> buyerList = db.getAllBuyer();
+		
 		// Object creation
-		BuyerRegList buyerList = new BuyerRegList();
-		SellerRegList sellerList = new SellerRegList();
+		BuyerRegList buyerRegList = new BuyerRegList();
+		SellerRegList sellerRegList = new SellerRegList();
 		ProductList productList = new ProductList();
-		BuyerExtendsProductList buyerExtendsProductList = new BuyerExtendsProductList();
-		SellerExtendsProductList sellerExtendsProductList = new SellerExtendsProductList();
 		HomePageReg homePageReg = new HomePageReg() ;
 		BuyerFuncImplementation buyerFuncImp = new BuyerFuncImplementation();
 		SellerFuncImplementation sellerFuncImp = new SellerFuncImplementation() ;
@@ -37,7 +39,6 @@ public class MainEcommerceBackend {
 			System.out.println("0. Exit from the application");
 			System.out.println("1. Create account") ;
 			System.out.println("2. Sign in") ;
-			System.out.println("3. Create bank Account") ;
 			System.out.println("Please enter you options: ") ;
 			int homePageChoice = in.nextInt() ;
 			if(homePageChoice == 1) {
@@ -49,13 +50,11 @@ public class MainEcommerceBackend {
 				in.nextLine();
 				
 				if(regPageChoice == 1) {
-					BuyerRegDetails buyerRegDetails = homePageReg.CreateBuyerAccount();
-					buyerList.addBuyer(buyerRegDetails) ;
+					homePageReg.CreateBuyerAccount();
 					System.out.println("You are registered successfully as a buyer...!");
 				}
 				else if(regPageChoice == 2) {
-					SellerRegDetails sellerRegDetails = homePageReg.CreateSellerAccount();
-					sellerList.addSeller(sellerRegDetails) ;
+					homePageReg.CreateSellerAccount();
 					System.out.println("You are registered successfully as a seller...!");
 				}
 				else {
@@ -74,15 +73,14 @@ public class MainEcommerceBackend {
 					in.nextLine();
 					
 					if(singInChoice == 1) {
-						BuyerRegDetails buyerProfile = buyerFuncImp.signInMethodBuyer(buyerList);
+						BuyerRegDetails buyerProfile = buyerFuncImp.signInMethodBuyer();
 						
 						if(buyerProfile != null) {
 							System.out.println("Buyer Details: ") ;
-							buyerFuncImp.showBuyerDetails(buyerProfile) ;
-							signIn = buyerSignIn = false ;
+							signIn = buyerSignIn = true ;
 							while(true) {
 								System.out.println("All Buyer feature...!") ;
-								System.out.println("1. Edit profile"); // done, without picture
+								System.out.println("1. Edit profile"); // done, without picture db
 								System.out.println("2. View products"); // done
 								System.out.println("3. Buy a product"); // done
 								System.out.println("4. Rate a product"); // done
@@ -97,7 +95,7 @@ public class MainEcommerceBackend {
 								
 								if(buyerChoice == 1) {
 									System.out.println("Buyer profile edit sectoin...!") ;
-									buyerList = buyerFuncImp.EditProfile(buyerList);
+									buyerFuncImp.EditProfile();
 								}
 								else if(buyerChoice == 2) {
 									System.out.println("View all products...!");
@@ -177,6 +175,7 @@ public class MainEcommerceBackend {
 								}
 								else {
 									System.out.println("You are successfully exited from buyer section...!") ;
+									signIn = buyerSignIn = false ;
 									break ;
 								}
 							}
@@ -187,7 +186,7 @@ public class MainEcommerceBackend {
 						}
 					}
 					else if(singInChoice == 2) {
-						SellerRegDetails sellerProfile = sellerFuncImp.signInMethodSeller(sellerList);
+						SellerRegDetails sellerProfile = sellerFuncImp.signInMethodSeller();
 						
 						
 						if(sellerProfile != null) {
@@ -211,28 +210,38 @@ public class MainEcommerceBackend {
 								
 								if(sellerChoice == 1) {
 									System.out.println("Add a product...!") ;
-									ProductDetails productDetails = sellerFuncImp.addProduct() ;
-									sellerExtendsProductList.addProduct(productDetails) ;
-									productList = sellerExtendsProductList ;
+									sellerFuncImp.addProduct(sellerProfile.getId()) ;
 									System.out.println("Product added successfully...!") ;
 								}
 								else if(sellerChoice == 2) {
 									System.out.println("Remove a product...!");
-									sellerExtendsProductList = sellerFuncImp.removeProduct(sellerExtendsProductList) ;
-									productList = sellerExtendsProductList ;
+									sellerFuncImp.removeProduct(sellerProfile.getId()) ;
 								}
 								else if(sellerChoice == 3) {
 									System.out.println("Show all products section...!");
-									sellerExtendsProductList.showAllProducts(); 
+									productList.showAllProducts(); 
 								}
 								else if(sellerChoice == 4) {
 									System.out.println("Connect with bank...!") ;
-									sellerBankAccountDetails = 
-											bankFunctionalites.isSellerConnectWithBank(existingBankDetails);
-									if(sellerBankAccountDetails != null) {
-										isSellerConnectBank = true ;
-										System.out.println("You are connected with bank...!") ;
+									System.out.println("1. log in into account") ;
+									System.out.println("2. create account") ; 
+									int choiceBankOption = in.nextInt() ;
+									in.nextLine();
+									
+									
+									if(choiceBankOption == 1) {
+										System.out.println("Log in your bank account...!") ;
+										sellerBankAccountDetails = 
+												bankFunctionalites.isSellerConnectWithBank(existingBankDetails);
+										if(sellerBankAccountDetails != null) {
+											isSellerConnectBank = true ;
+											System.out.println("You are connected with bank...!") ;
+										}
+										else {
+											System.out.println("You are not connected with bank or your given info is wrong...!") ;
+										}
 									}
+
 									else {
 										System.out.println("Please create account in a bank...!") ;
 										sellerBankAccountDetails = 

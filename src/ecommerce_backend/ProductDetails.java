@@ -2,22 +2,29 @@ package ecommerce_backend;
 
 public class ProductDetails {
 	private int ProductId; 
+	private int SellerId;
 	private String ProductName ;
+	private String ProductTag ;
 	private int Price ;
 	private String ProductImagePath = "";
 	private int Quantity ;
 	private double Rating ;
 	
-	public ProductDetails(int productId, String name, int price, int quantity) {
+	public ProductDetails(int productId, int sellerId, String name,
+			String tag, int price, int quantity, int rating) {
 		ProductId = productId ;
+		SellerId = sellerId;
 		ProductName = name ;
+		ProductTag = tag ;
 		Price = price ;
 		Quantity = quantity ;
-		Rating = 5.0 ;
+		Rating = rating;
 	}
 	
 	public int getProductId() { return ProductId; }
+	public int getSellerId() { return SellerId; }
 	public String getProductName() { return ProductName; }
+	public String getProductTag() { return ProductTag; }
 	public int getProductPrice() { return Price; }
 	public int getProductQuantity() { return Quantity; }
 	public String getProductImagePath() { return ProductImagePath; }

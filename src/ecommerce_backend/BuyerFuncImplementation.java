@@ -5,6 +5,9 @@ import java.util.*;
 public class BuyerFuncImplementation {
 	private static Scanner in = new Scanner(System.in) ;
 	ValidationMethods validationMethods = null ;
+	DBConnector db = new DBConnector() ;
+	List<BuyerRegDetails> buyerList = db.getAllBuyer() ;
+	BuyerRegList buyerRegList = new BuyerRegList() ;
 	
 	public BuyerFuncImplementation() {
 		validationMethods = new ValidationMethods()  ;
@@ -18,7 +21,7 @@ public class BuyerFuncImplementation {
 		System.out.println("-----------------------");
 	}
 	
-	public BuyerRegDetails signInMethodBuyer(BuyerRegList buyerList) {
+	public BuyerRegDetails signInMethodBuyer() {
 		String email, password ;
 		while(true) {
 			System.out.println("Sign in as a buyer...!") ;
@@ -29,7 +32,7 @@ public class BuyerFuncImplementation {
 			System.out.println("Enter your password: ") ;
 			password = in.nextLine() ;
 			
-			BuyerRegDetails buyerProfile = buyerList.isRegesterBuyerUser(email, password) ;
+			BuyerRegDetails buyerProfile = buyerRegList.isRegesterBuyerUser(email, password) ;
 			if(buyerProfile != null) {
 				System.out.println("You are sign in successfully...!") ;
 				return buyerProfile ;
@@ -47,7 +50,7 @@ public class BuyerFuncImplementation {
 	}
 	
 	// 1. Edit profile section feature
-	public BuyerRegList EditProfile(BuyerRegList buyerList) {
+	public void EditProfile() {
 		while(true) {
 			System.out.println("0. Back") ;
 			System.out.println("1. Change email");
@@ -67,12 +70,13 @@ public class BuyerFuncImplementation {
 					String newEmail = in.nextLine();
 					newEmail = validationMethods.validEmail(newEmail) ;
 					
-					BuyerRegDetails buyerDetailsForEmailChange = buyerList.findEmail(newEmail) ;
+					BuyerRegDetails buyerDetailsForEmailChange = buyerRegList.findEmail(newEmail) ;
+					
 					if(buyerDetailsForEmailChange != null) {
 						System.out.println("The email is already exist...! please try again...!") ;
 						continue ;
 					} else {
-						buyerProfile = buyerList.changeEmail(currentEmail, newEmail);
+						buyerProfile = buyerRegList.changeEmail(currentEmail, newEmail);
 						if(buyerProfile != null) {
 							System.out.println("Successfully edited your profile...!") ;
 							showBuyerDetails(buyerProfile) ;
@@ -96,7 +100,7 @@ public class BuyerFuncImplementation {
 					newPassword = in.nextLine();
 				}
 				
-				buyerProfile = buyerList.changePassword(currentEmail, currentPassword, newPassword);
+				buyerProfile = buyerRegList.changePassword(currentEmail, currentPassword, newPassword);
 				if(buyerProfile != null) {
 					System.out.println("Successfully edited your profile...!") ;
 					showBuyerDetails(buyerProfile) ;
@@ -112,7 +116,7 @@ public class BuyerFuncImplementation {
 				System.out.println("Please Enter your new name: ") ;
 				String newName = in.nextLine();
 				newName = validationMethods.validName(newName) ;
-				buyerProfile = buyerList.changeName(currentEmail, currentName, newName) ;
+				buyerProfile = buyerRegList.changeName(currentEmail, currentName, newName) ;
 				if(buyerProfile != null) {
 					System.out.println("Successfully edited your profile...!") ;
 					showBuyerDetails(buyerProfile) ;
@@ -125,7 +129,6 @@ public class BuyerFuncImplementation {
 				break ;
 			}
 		}
-		return buyerList;
 	}
 	
 }
