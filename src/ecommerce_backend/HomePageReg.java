@@ -30,13 +30,18 @@ public class HomePageReg {
 		}
 		in.nextLine();
 		
-		System.out.println("Enter you address: ") ;
+		System.out.println("Enter your address: ") ;
 		String address = in.nextLine();
 		address = validationMethods.validAddress(address) ;
 		//System.out.println("Enter you profilePicture: ") ;
 		
+		System.out.println("Enter your bank name; ") ;
+		String bankName = in.nextLine();
+		System.out.println("Enter your bank account number: ") ;
+		String acc_num = in.nextLine();
+		
 		BuyerRegDetails buyerRegDetails =
-				new BuyerRegDetails(id, name, email, password, address);
+				new BuyerRegDetails(id, name, email, password, address, 0.0, bankName, acc_num);
 		db.saveBuyerAccount(buyerRegDetails);
 	}
 	
@@ -65,9 +70,14 @@ public class HomePageReg {
 		System.out.println("Enter your address: ") ;
 		String address = in.nextLine();
 		address = validationMethods.validAddress(address) ;
+		
+		System.out.println("Enter your bank name; ") ;
+		String bankName = in.nextLine();
+		System.out.println("Enter your bank account number: ") ;
+		String acc_num = in.nextLine();
 	
 		SellerRegDetails sellerRegDetails = 
-				new SellerRegDetails(id, name, email, password, companyName, address);
+				new SellerRegDetails(id, name, email, password, companyName, address, 0.0, bankName, acc_num);
 		db.saveSellerAccount(sellerRegDetails);
 	}
 }

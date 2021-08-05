@@ -8,6 +8,8 @@ public class SellerFuncImplementation {
 	DBConnector db = new DBConnector() ;
 	List<SellerRegDetails> sellerList = db.getAllSeller() ;
 	SellerRegList sellerRegList = new SellerRegList() ;
+	ProductList productList = new ProductList() ;
+	List<ProductDetails> productDetailsList = new ArrayList<>() ;
 	
 	public SellerFuncImplementation() {
 		validationMethods = new ValidationMethods() ;
@@ -18,6 +20,7 @@ public class SellerFuncImplementation {
 		System.out.println("Seller Email: " + seller.getEmail()) ;
 		System.out.println("Seller Password: " + seller.getPassword()) ;
 		System.out.println("Seller Address: " + seller.getAddress());
+		System.out.println("Seller Money: " + seller.getMoney());
 		System.out.println("-----------------------");
 	}
 	
@@ -51,21 +54,55 @@ public class SellerFuncImplementation {
 	
 	public void addProduct(int sellerId) {
 		int id = 0 ;
-		System.out.println("Enter product name: ") ;
-		String name = in.nextLine();
-		
-		System.out.println("Enter product tag name: ") ;
-		String tag = in.nextLine();
-		
-		System.out.println("Enter product price: ") ;
-		int price = in.nextInt();
+		System.out.println("1. Update product quantity which is already exits...!") ;
+		System.out.println("2. Add a new Product...!") ;
+		int choiceProductOption = in.nextInt();
 		in.nextLine();
 		
-		System.out.println("Enter product Quantity: ") ;
-		int quantity = in.nextInt();
-		
-		ProductDetails productDetails = new ProductDetails(id, sellerId, name, tag, price, quantity, 5);
-		db.saveProduct(productDetails) ;
+		if(choiceProductOption == 1) {
+			productList.showAllProducts();
+			
+			System.out.println("Enter product Id: ") ;
+			int p_id = in.nextInt();
+			
+			System.out.println("Enter product quantity to add: ") ;
+			int quantity = in.nextInt();
+			in.nextLine();
+			
+			productDetailsList = db.getAllProduct() ;
+			boolean productExist = false ;
+			for(ProductDetails product: productDetailsList) {
+				if(product.getProductId() == p_id) {
+					quantity = product.getProductQuantity() + quantity ;
+					productExist = true ;
+					break ;
+				}
+			}
+			
+			
+			if(productExist) {
+				db.updateProductDetails(p_id, quantity) ;
+			}else {
+				System.out.println("Doesn't find the product. please try again...!") ;
+			}
+			
+		}
+		else {
+			System.out.println("Enter product name: ") ;
+			String name = in.nextLine();
+			
+			String tag = getProductTagName() ;
+			
+			System.out.println("Enter product price: ") ;
+			int price = in.nextInt();
+			in.nextLine();
+			
+			System.out.println("Enter product Quantity: ") ;
+			int quantity = in.nextInt();
+			
+			ProductDetails productDetails = new ProductDetails(id, sellerId, name, tag, price, quantity, 0);
+			db.saveProduct(productDetails) ;	
+		}
 	}
 	
 	public void removeProduct(int sellerId) {
@@ -78,5 +115,24 @@ public class SellerFuncImplementation {
 		}else{
 			System.out.println("Product is not available in the store...!") ;
 		}
+	}
+	
+	private String getProductTagName() {
+		System.out.println("Select a Tag name...!") ;
+		System.out.println("1. GROCERY") ; System.out.println("2. EDUCATIONAL EQUIPMENT") ;
+		System.out.println("3. ELECTRONIC DEVICE") ; System.out.println("4. HOUSEHOLD EQUIPMENT") ;
+		int tagChoice = in.nextInt();
+		in.nextLine();
+		String tagName = "" ;
+		if(tagChoice == 1) {
+			tagName = "grocery" ;
+		}else if(tagChoice == 2) {
+			tagName = "educational" ;
+		}else if(tagChoice == 3) {
+			tagName = "electronic" ;
+		}else if(tagChoice == 4) {
+			tagName = "household" ;
+		}
+		return tagName ;
 	}
 }

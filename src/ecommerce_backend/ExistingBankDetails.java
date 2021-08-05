@@ -15,24 +15,26 @@ public class ExistingBankDetails {
 	}
 	
 	public void AccountDetailsHere(BankAccountDetails account) {
+		System.out.println("ID: " + account.getId());
 		System.out.println("Account name: " + account.getAccountName()) ;
 		System.out.println("Account number: " + account.getAccountNumber()) ;
+		System.out.println("Account email: " + account.getEmail()) ;
 		System.out.println("Bank name: " + account.getBankName()) ;
 		System.out.println("Bank branch: " + account.getBankBranch()) ;
 		System.out.println("Money: " + account.getMoney()) ;
 	}
 	
-	public BankAccountDetails findAccountDetails(String name, String accNo,
-			String bankName, String branch) {
+	public BankAccountDetails findAccountDetails(String accNo, String bankName) {
+		bankAccountList = db.getAllBankAccounts() ;
+		
 		if(bankAccountList.size() == 0) {
 			System.out.println("Empty account...!") ;
 			return null ;
 		}
 		for(BankAccountDetails account: bankAccountList) {
 			if(account == null) { break ; }
-			if(accNo.equals(account.getAccountNumber()) && bankName.equals(account.getBankName())
-					&& branch.equals(account.getBankBranch())) {
-				return account ;
+			if(accNo.equals(account.getAccountNumber()) && bankName.equals(account.getBankName())) {
+				return (BankAccountDetails)db.getBankAccount(accNo, bankName) ;
 			}
 		}
 		return null ;
@@ -51,49 +53,52 @@ public class ExistingBankDetails {
 		}
 	}
 	
-	public BankAccountDetails addMoney(BankAccountDetails account, double money) {
+	public BankAccountDetails addMoney(BankAccountDetails account,String bankName, double money) {
+		bankAccountList = db.getAllBankAccounts();
+		BankAccountDetails bankAccount = account ;
 		for(BankAccountDetails acc: bankAccountList) {
-			if(acc == null) break ;
 			if(acc.getAccountNumber().equals(account.getAccountNumber()) && 
-					acc.getBankName().equals(account.getBankName())) {
-				acc.setMoney(acc.getMoney() + money);
-				System.out.println(money + " taka added successfully and you current balance is " + acc.getMoney() + "...!") ;
-				return acc ;
+					acc.getBankName().equals(bankName)) {
+				bankAccount = db.saveMoney(acc.getAccountNumber(), acc.getMoney()+money);
+				System.out.println(money + " taka added successfully and you current balance is " + bankAccount.getMoney() + "...!") ;
+				return bankAccount ;
 			}
 		}
-		return account ;
+		return bankAccount ;
 	}
 	
-	public BankAccountDetails withdrawMoney(BankAccountDetails account, double money) {
+	public BankAccountDetails withdrawMoney(BankAccountDetails account, double money, String bankName) {
+		bankAccountList = db.getAllBankAccounts();
+		BankAccountDetails bankAccount = account ;
 		for(BankAccountDetails acc: bankAccountList) {
-			if(acc == null) break ;
 			if(acc.getAccountNumber().equals(account.getAccountNumber()) && 
-					acc.getBankName().equals(account.getBankName())) {
-				acc.setMoney(acc.getMoney() - money);
-				System.out.println(money + " taka withdraw successfully and you current balance is " + acc.getMoney() + "...!") ;
-				return acc ;
+					acc.getBankName().equals(bankName)) {
+				bankAccount = db.takeMoney(acc.getAccountNumber(), account.getMoney() - money);
+				System.out.println(money + " taka withdraw successfully and you current balance is " + bankAccount.getMoney() + "...!") ;
+				return bankAccount ;
 			}
 		}
-		return account ;
+		return bankAccount ;
 	}
 	
-	public void changeBankMoneyAfterPurchase(BankAccountDetails account, double money) {
+	public void withdrawBankMoneyAfterPurchase(String acc_number, double money) {
+		bankAccountList  = db.getAllBankAccounts();
 		for(BankAccountDetails acc: bankAccountList) {
 			if(acc == null) break ;
-			if(acc.getAccountNumber().equals(account.getAccountNumber()) && 
-					acc.getBankName().equals(account.getBankName())) {
+			if(acc.getAccountNumber().equals(acc_number)) {
 				money = acc.getMoney() - money ;
-				acc.setMoney(money);
+				db.takeMoney(acc.getAccountNumber(), money);
+				return ;
 			}
 		}
 	}
-	public void addBankMoneyAfterPurchase(BankAccountDetails account, double money) {
+	public void addBankMoneyAfterPurchase(String email, double money) {
+		bankAccountList = db.getAllBankAccounts();
 		for(BankAccountDetails acc: bankAccountList) {
 			if(acc == null) break ;
-			if(acc.getAccountNumber().equals(account.getAccountNumber()) && 
-					acc.getBankName().equals(account.getBankName())) {
+			if(acc.getEmail().equals(email)) {
 				money = acc.getMoney() + money ;
-				acc.setMoney(money);
+				db.saveMoney(acc.getAccountNumber(), money);
 			}
 		}
 	}

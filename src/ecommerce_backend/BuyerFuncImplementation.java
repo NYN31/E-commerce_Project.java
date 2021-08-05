@@ -18,6 +18,7 @@ public class BuyerFuncImplementation {
 		System.out.println("Buyer Email: " + buyer.getEmail()) ;
 		System.out.println("Buyer Password: " + buyer.getPassword()) ;
 		System.out.println("Buyer Address: " + buyer.getAddress());
+		System.out.println("Buyer Money: " + buyer.getMoney());
 		System.out.println("-----------------------");
 	}
 	
@@ -81,7 +82,7 @@ public class BuyerFuncImplementation {
 							System.out.println("Successfully edited your profile...!") ;
 							showBuyerDetails(buyerProfile) ;
 						}else {
-							System.out.println("You given info are wrong...!");
+							System.out.println("Your given info are wrong...!");
 						}
 						break ;
 					}
@@ -105,7 +106,7 @@ public class BuyerFuncImplementation {
 					System.out.println("Successfully edited your profile...!") ;
 					showBuyerDetails(buyerProfile) ;
 				}else {
-					System.out.println("You given info are wrong...!");
+					System.out.println("Your given info are wrong...!");
 				}
 			}
 			else if(editProfilechoice == 3) {
@@ -121,7 +122,7 @@ public class BuyerFuncImplementation {
 					System.out.println("Successfully edited your profile...!") ;
 					showBuyerDetails(buyerProfile) ;
 				}else {
-					System.out.println("You given info are wrong...!");
+					System.out.println("Your given info are wrong...!");
 				}
 			}
 			else {

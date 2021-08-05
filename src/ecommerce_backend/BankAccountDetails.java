@@ -28,6 +28,4 @@ public class BankAccountDetails {
 	public String getBankName() { return BankName; }
 	public String getBankBranch() { return BankBranch; }
 	public double getMoney() { return Money; }
-	
-	public void setMoney(double money) { Money = money ; }
 }

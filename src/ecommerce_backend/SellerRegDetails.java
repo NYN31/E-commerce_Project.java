@@ -8,9 +8,12 @@ public class SellerRegDetails {
 	private String CompanyName;
 	private String Address;
 	private String LogoImagePath = "" ;
+	private double Money ;
+	private String BankName ;
+	private String AccountNum ;
 	
 	public SellerRegDetails(int id, String name, String email, String password,
-			String companyName, String address) {
+			String companyName, String address, double money, String b_name, String a_num) {
 		Id = id ;
 		Name = name ;
 		Email = email;
@@ -18,6 +21,9 @@ public class SellerRegDetails {
 		CompanyName = companyName ;
 		Address = address ;
 		LogoImagePath = "" ;
+		Money = money ;
+		BankName = b_name ;
+		AccountNum = a_num ;
 	}
 	
 	public int getId() { return Id; }
@@ -27,4 +33,7 @@ public class SellerRegDetails {
 	public String getCompanyName() { return CompanyName; }
 	public String getAddress() { return Address; }
 	public String getLogoImagePath() { return LogoImagePath; }
+	public double getMoney() { return Money; }
+	public String getBankName() { return BankName; }
+	public String getAccountNumber() { return AccountNum; }
 }

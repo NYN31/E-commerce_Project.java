@@ -11,7 +11,7 @@ public class ProductDetails {
 	private double Rating ;
 	
 	public ProductDetails(int productId, int sellerId, String name,
-			String tag, int price, int quantity, int rating) {
+			String tag, int price, int quantity, double rating) {
 		ProductId = productId ;
 		SellerId = sellerId;
 		ProductName = name ;
@@ -29,8 +29,4 @@ public class ProductDetails {
 	public int getProductQuantity() { return Quantity; }
 	public String getProductImagePath() { return ProductImagePath; }
 	public double getRating() { return Rating; }
-	
-	public void setProductRating(double rating) { Rating = rating ; }
-	public void setProductQuantity(int quantity) { Quantity = quantity; }
-	
 }
